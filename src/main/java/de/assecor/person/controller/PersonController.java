@@ -1,20 +1,18 @@
 package de.assecor.person.controller;
 
-import com.opencsv.bean.CsvToBean;
-import com.opencsv.bean.CsvToBeanBuilder;
-import de.assecor.person.service.PersonService;
+import de.assecor.person.config.exception.BadRequestException;
+import de.assecor.person.config.ImportCsvReader;
+import de.assecor.person.config.exception.ServiceResponseException;
+import de.assecor.person.person.Person;
+import de.assecor.person.person.PersonDbo;
+import de.assecor.person.person.PersonRowModel;
 import io.swagger.annotations.ApiOperation;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.ui.Model;
+import org.springframework.beans.BeanUtils;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
-import de.assecor.person.person.Person;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.io.BufferedReader;
-import java.io.InputStreamReader;
-import java.io.Reader;
-import java.util.Collections;
+import java.io.IOException;
 import java.util.List;
 
 
@@ -23,48 +21,40 @@ import java.util.List;
 @RequestMapping(value = "persons", produces = "application/json")
 public class PersonController {
 
-    private final PersonService personService;
+    private  final PersonService personService;
 
-    @Autowired
     public PersonController(PersonService personService) {
         this.personService = personService;
     }
 
-    @ApiOperation("Gets a list of persons")
-
+    @ApiOperation("upload a list of persons from a csv file")
     @PostMapping("/upload-csv-file")
-    public String uploadCSVFile(@RequestParam("file") MultipartFile file, Model model) {
+    public void importCsv(
+            @RequestParam("file") MultipartFile multipartFile) throws IOException, ServiceResponseException {
 
-        // validate file
-        if (file.isEmpty()) {
-            model.addAttribute("message", "Please select a CSV file to upload.");
-            model.addAttribute("status", false);
-        } else {
-
-            // parse CSV file to create a list of `User` objects
-            try (Reader reader = new BufferedReader(new InputStreamReader(file.getInputStream()))) {
-
-                // create csv bean reader
-                CsvToBean<Person> csvToBean = new CsvToBeanBuilder(reader)
-                        .withType(Person.class)
-                        .withIgnoreLeadingWhiteSpace(true)
-                        .build();
-
-                List<Person> users = csvToBean.parse();
-
-                // save users list on model
-                model.addAttribute("users", users);
-                model.addAttribute("status", true);
-
-            } catch (Exception ex) {
-                model.addAttribute("message", "An error occurred while processing the CSV file.");
-                model.addAttribute("status", false);
-            }
+        ImportCsvReader<PersonRowModel> csvReader = new ImportCsvReader<>(PersonRowModel.class);
+        List<PersonRowModel> importRows = csvReader.importFromInputStream(multipartFile.getInputStream());
+        if (importRows.isEmpty()) {
+            throw new BadRequestException("The given CSV file is empty");
         }
 
-        return "file-upload-status";
-    }
+        for(PersonRowModel personRowModel : importRows) {
+            PersonDbo person = mapImportModelToPersonDbo(personRowModel);
+            System.out.println(person.getCity());
+            System.out.println(person.getId());
+            personService.create(person);
+/*
+            Optional<Person> existingPrice = personService.getByRentalObjectId(personRowModel.getRentalObjectId());
 
+            if (existingPrice.isPresent()) {
+                priceService.update(existingPrice.get().getId(), price);
+            } else {
+                priceService.create(price);
+            }*/
+        }
+
+    }
+/*
 
     @ApiOperation("Gets a list of persons")
     @GetMapping
@@ -81,4 +71,13 @@ public class PersonController {
 
         return result;
     }
+    */
+private PersonDbo mapImportModelToPersonDbo(PersonRowModel personRowModel) {
+
+    PersonDbo person = new PersonDbo();
+    BeanUtils.copyProperties(personRowModel, person);
+
+
+    return person;
+}
 }

@@ -1,6 +1,6 @@
 package de.assecor.person.person;
 
-import com.opencsv.bean.CsvBindByPosition;
+import de.assecor.person.person.ColourEntryEnum;
 
 public class Person {
 
@@ -15,9 +15,6 @@ public class Person {
     private String city;
 
     private ColourEntryEnum color;
-
-    public Person(long id, String name, String lastName, boolean zicode) {
-    }
 
     public Long getId() {
         return id;

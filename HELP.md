@@ -1,7 +1,7 @@
 # Read Me First
 The following was discovered as part of building this project:
 
-* The original package name '.person' is invalid and this project uses 'person' instead.
+* The original package name 'de.assecor.person-service' is invalid and this project uses 'de.assecor.person' instead.
 
 # Getting Started
 
