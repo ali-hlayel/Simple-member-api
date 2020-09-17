@@ -2,6 +2,8 @@ package de.assecor.person.person;
 
 public class PersonRowModel {
 
+    private Long id;
+
     private String name;
 
     private String lastName;
@@ -11,6 +13,14 @@ public class PersonRowModel {
     private String city;
 
     private ColourEntryEnum color;
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
 
     public String getName() {
         return name;

@@ -1,9 +1,13 @@
 package de.assecor.person.controller;
 
 import de.assecor.person.person.PersonEntity;
-import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
-import org.springframework.data.repository.PagingAndSortingRepository;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
 
+import java.util.List;
 
-public interface PersonRepository extends PagingAndSortingRepository<PersonEntity, Long>, JpaSpecificationExecutor<PersonEntity> {
+@Repository
+public interface PersonRepository extends JpaRepository<PersonEntity, Long> {
+
+    List<PersonEntity> findByColor(int colorValue);
 }

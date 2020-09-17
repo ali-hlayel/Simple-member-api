@@ -1,18 +1,17 @@
 package de.assecor.person.controller;
 
-import de.assecor.person.config.exception.BadRequestException;
-import de.assecor.person.config.ImportCsvReader;
-import de.assecor.person.config.exception.ServiceResponseException;
+import de.assecor.person.config.helper.CsvReader;
+import de.assecor.person.person.ColourEntryEnum;
 import de.assecor.person.person.PersonEntity;
 import de.assecor.person.person.PersonRowModel;
 import io.swagger.annotations.ApiOperation;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.BeanUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.io.IOException;
 import java.util.List;
 
 
@@ -20,7 +19,8 @@ import java.util.List;
 @RequestMapping(value = "persons", produces = "application/json")
 public class PersonController {
 
-    private  final PersonService personService;
+    @Autowired
+    private PersonService personService;
 
     public PersonController(PersonService personService) {
         this.personService = personService;
@@ -28,40 +28,33 @@ public class PersonController {
 
     @ApiOperation("upload a list of persons from a csv file")
     @PostMapping("/upload-csv-file")
-    public void importCsv(
-            @RequestParam("file") MultipartFile multipartFile) throws IOException, ServiceResponseException {
+    public void importCsvFile(
+            @RequestParam("file") MultipartFile file) {
 
-        ImportCsvReader<PersonRowModel> csvReader = new ImportCsvReader<>(PersonRowModel.class);
-        List<PersonRowModel> importRows = csvReader.importFromInputStream(multipartFile.getInputStream());
-        if (importRows.isEmpty()) {
-            throw new BadRequestException("The given CSV file is empty");
+        if (CsvReader.hasCSVFormat(file)) {
+            try {
+                personService.save(file);
+
+            } catch (Exception e) {
+              String  message = "Could not upload the file: " + file.getOriginalFilename() + "!";
+            }
         }
-
-        for(PersonRowModel personRowModel : importRows) {
-            PersonEntity person = mapImportModelToPersonDbo(personRowModel);
-            System.out.println(person.getCity());
-            System.out.println(person.getId());
-            personService.create(person);
-/*
-            Optional<Person> existingPrice = personService.getByRentalObjectId(personRowModel.getRentalObjectId());
-
-            if (existingPrice.isPresent()) {
-                priceService.update(existingPrice.get().getId(), price);
-            } else {
-                priceService.create(price);
-            }*/
-        }
-
     }
 
     @ApiOperation("Creates a Person")
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public PersonEntity createPerson( @RequestBody PersonRowModel createModel) throws ServiceResponseException {
-        PersonEntity personEntity = new PersonEntity();
-        BeanUtils.copyProperties(createModel, personEntity);
-return personEntity;
-        }
+    public PersonEntity createPerson(@RequestBody PersonRowModel createModel) {
+        PersonEntity personEntity = mapImportModelToPersonDbo(createModel);
+        PersonEntity result = personService.create(personEntity);
+        return result;
+    }
+
+    @GetMapping()
+    public List<PersonEntity> getPersons() {
+
+        return personService.get();
+    }
 
     @ApiOperation("get a Person")
     @GetMapping(path = "/{id}")
@@ -71,12 +64,17 @@ return personEntity;
         PersonRowModel returnValue = modelMapper.map(person, PersonRowModel.class);
         return returnValue;
     }
-private PersonEntity mapImportModelToPersonDbo(PersonRowModel personRowModel) {
 
-    PersonEntity person = new PersonEntity();
-    BeanUtils.copyProperties(personRowModel, person);
+    @ApiOperation("Get by colors")
+    @GetMapping(path = "/color/{color}")
+    public List<PersonEntity> getPersonByColor(@PathVariable String color) {
+        return personService.getByColor(ColourEntryEnum.valueOf(color).getNumber());
+    }
 
+    private PersonEntity mapImportModelToPersonDbo(PersonRowModel personRowModel) {
+        PersonEntity person = new PersonEntity();
+        BeanUtils.copyProperties(personRowModel, person);
 
-    return person;
-}
+        return person;
+    }
 }

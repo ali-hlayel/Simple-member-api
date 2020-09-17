@@ -1,4 +1,4 @@
-package de.assecor.person.config;
+package de.assecor.person.config.core;
 import com.google.common.base.Predicates;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

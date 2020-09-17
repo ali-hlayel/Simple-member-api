@@ -1,7 +1,5 @@
 package de.assecor.person.person;
 
-import de.assecor.person.person.ColourEntryEnum;
-
 public class Person {
 
     private Long id;
