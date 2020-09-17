@@ -1,9 +1,11 @@
 package de.assecor.person.controller;
 
-import de.assecor.person.person.PersonDbo;
+import de.assecor.person.person.PersonEntity;
 
 public interface PersonService {
 
-    PersonDbo create(PersonDbo person);
+    PersonEntity create(PersonEntity person);
+
+    PersonEntity getOne(long id);
 
 }

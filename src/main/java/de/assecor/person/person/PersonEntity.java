@@ -1,31 +1,31 @@
 package de.assecor.person.person;
 
 
-import com.sun.istack.NotNull;
-
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 
 @Entity
 @Table(name = "persons")
-public class PersonDbo {
+public class PersonEntity {
 
     @Id
     @GeneratedValue
     private Long id;
 
-    @NotNull
+    @NotBlank
     private String name;
 
-    @NotNull
+    @NotBlank
     private String lastName;
 
     @NotNull
     private Long zipCode;
 
-    @NotNull
+    @NotBlank
     private String city;
 
     @NotNull

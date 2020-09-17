@@ -3,12 +3,12 @@ package de.assecor.person.controller;
 import de.assecor.person.config.exception.BadRequestException;
 import de.assecor.person.config.ImportCsvReader;
 import de.assecor.person.config.exception.ServiceResponseException;
-import de.assecor.person.person.Person;
-import de.assecor.person.person.PersonDbo;
+import de.assecor.person.person.PersonEntity;
 import de.assecor.person.person.PersonRowModel;
 import io.swagger.annotations.ApiOperation;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.BeanUtils;
-import org.springframework.validation.annotation.Validated;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -16,7 +16,6 @@ import java.io.IOException;
 import java.util.List;
 
 
-@Validated
 @RestController
 @RequestMapping(value = "persons", produces = "application/json")
 public class PersonController {
@@ -39,7 +38,7 @@ public class PersonController {
         }
 
         for(PersonRowModel personRowModel : importRows) {
-            PersonDbo person = mapImportModelToPersonDbo(personRowModel);
+            PersonEntity person = mapImportModelToPersonDbo(personRowModel);
             System.out.println(person.getCity());
             System.out.println(person.getId());
             personService.create(person);
@@ -54,27 +53,27 @@ public class PersonController {
         }
 
     }
-/*
 
-    @ApiOperation("Gets a list of persons")
-    @GetMapping
-    public List<Person> getPersons(@RequestParam(value = "page", defaultValue = "0") int page,
-                                   @RequestParam(value = "limit", defaultValue = "10") int limit) {
-        List<Person> result = Collections.emptyList();// personService.getPersons(page, limit);
-        return result;
-    }
+    @ApiOperation("Creates a Person")
+    @PostMapping
+    @ResponseStatus(HttpStatus.CREATED)
+    public PersonEntity createPerson( @RequestBody PersonRowModel createModel) throws ServiceResponseException {
+        PersonEntity personEntity = new PersonEntity();
+        BeanUtils.copyProperties(createModel, personEntity);
+return personEntity;
+        }
 
-    @ApiOperation("Gets a single person")
+    @ApiOperation("get a Person")
     @GetMapping(path = "/{id}")
-    public Person getMember(@PathVariable long id) {
-        Person result = null;//personService.getById(id);
-
-        return result;
+    public PersonRowModel getMember(@PathVariable long id) {
+        PersonEntity person = personService.getOne(id);
+        ModelMapper modelMapper = new ModelMapper();
+        PersonRowModel returnValue = modelMapper.map(person, PersonRowModel.class);
+        return returnValue;
     }
-    */
-private PersonDbo mapImportModelToPersonDbo(PersonRowModel personRowModel) {
+private PersonEntity mapImportModelToPersonDbo(PersonRowModel personRowModel) {
 
-    PersonDbo person = new PersonDbo();
+    PersonEntity person = new PersonEntity();
     BeanUtils.copyProperties(personRowModel, person);
 
 
