@@ -2,9 +2,7 @@ package de.assecor.person;
 
 import de.assecor.constant.ColorEntryEnum;
 
-public class PersonModel {
-
-    private Long id;
+public class PersonCreateModel {
 
     private String name;
 
@@ -15,14 +13,6 @@ public class PersonModel {
     private String city;
 
     private ColorEntryEnum color;
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
 
     public String getName() {
         return name;

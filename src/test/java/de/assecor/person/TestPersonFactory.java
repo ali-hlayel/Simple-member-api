@@ -15,8 +15,8 @@ public class TestPersonFactory {
         return person;
     }
 
-    public static PersonModel createPersonModel() {
-        PersonModel person = new PersonModel();
+    public static PersonCreateModel createPersonModel() {
+        PersonCreateModel person = new PersonCreateModel();
         person.setName("Ali");
         person.setLastName("Hlayel");
         person.setCity("Jerusalem");

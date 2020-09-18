@@ -25,11 +25,6 @@ public class PersonServiceImpl implements PersonService {
     @Override
     public Person createPerson(Person person) throws CreateErrorException {
 
-            Optional<Person> optionalExistingPerson = personRepository.findById(person.getId());
-            if (optionalExistingPerson.isPresent()) {
-                throw new CreateErrorException("Can't create person id: " + person.getId()
-                        + ", person id is already exist");
-            }
         Person result = personRepository.save(person);
         return result;
     }

@@ -1,7 +1,7 @@
 package de.assecor.controller;
 
 import de.assecor.entity.Person;
-import de.assecor.person.PersonModel;
+import de.assecor.person.PersonCreateModel;
 import de.assecor.person.TestPersonFactory;
 import de.assecor.services.PersonService;
 import org.junit.jupiter.api.BeforeEach;
@@ -9,6 +9,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
+import org.springframework.data.web.PageableHandlerMethodArgumentResolver;
 import org.springframework.http.MediaType;
 import org.springframework.http.converter.HttpMessageConverter;
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
@@ -48,6 +49,7 @@ class PersonControllerTest {
         MockitoAnnotations.initMocks(this);
         this.mockMvc = MockMvcBuilders
                 .standaloneSetup(new PersonController(personService))
+                .setCustomArgumentResolvers(new PageableHandlerMethodArgumentResolver())
                 .build();
         this.mappingJackson2HttpMessageConverter = new MappingJackson2HttpMessageConverter();
     }
@@ -81,7 +83,7 @@ class PersonControllerTest {
 
     @Test
     void createPerson() throws Exception {
-        PersonModel personRequestCreateModel = TestPersonFactory.createPersonModel();
+        PersonCreateModel personRequestCreateModel = TestPersonFactory.createPersonModel();
         when(personService.createPerson(any(Person.class))).thenReturn(TestPersonFactory.createPerson());
 
         this.mockMvc.perform(post(LINK)
