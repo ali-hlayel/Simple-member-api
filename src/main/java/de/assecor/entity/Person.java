@@ -1,19 +1,36 @@
-package de.assecor.person;
+package de.assecor.entity;
+
 
 import de.assecor.constant.ColorEntryEnum;
 
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.Table;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+
+@Entity
+@Table(name = "persons")
 public class Person {
 
+    @Id
+    @GeneratedValue
     private Long id;
 
+    @NotBlank
     private String name;
 
+    @NotBlank
     private String lastName;
 
+    @NotNull
     private Long zipCode;
 
+    @NotBlank
     private String city;
 
+    @NotNull
     private ColorEntryEnum color;
 
     public Long getId() {
@@ -66,7 +83,7 @@ public class Person {
 
     @Override
     public String toString() {
-        return "person.Person{" +
+        return "Person{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
                 ", lastName='" + lastName + '\'' +

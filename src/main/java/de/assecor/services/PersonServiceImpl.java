@@ -4,7 +4,7 @@ import com.opencsv.exceptions.CsvException;
 import de.assecor.config.exception.CreateErrorException;
 import de.assecor.config.helper.CsvReader;
 import de.assecor.constant.ColorEntryEnum;
-import de.assecor.entity.PersonEntity;
+import de.assecor.entity.Person;
 import de.assecor.person.PersonImportRowModel;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -23,36 +23,28 @@ public class PersonServiceImpl implements PersonService {
     private PersonRepository personRepository;
 
     @Override
-    public PersonEntity createPerson(PersonEntity person) throws CreateErrorException {
+    public Person createPerson(Person person) throws CreateErrorException {
 
-        if (person == null) {
-            throw new IllegalArgumentException("Booking may not be null");
-        }
-
-        if (person.getId() != null) {
-            Optional<PersonEntity> optionalExistingPerson = personRepository.findById(person.getId());
+            Optional<Person> optionalExistingPerson = personRepository.findById(person.getId());
             if (optionalExistingPerson.isPresent()) {
                 throw new CreateErrorException("Can't create person id: " + person.getId()
-                        + ", person already exist");
-            } else {
-                throw new IllegalArgumentException("Create person can't have id !!");
+                        + ", person id is already exist");
             }
-        }
-        PersonEntity result = personRepository.save(person);
+        Person result = personRepository.save(person);
         return result;
     }
 
     @Override
-    public PersonEntity getById(long id) throws NoResultException {
-        PersonEntity result = personRepository.findById(id).orElseThrow(
-                () -> new NoResultException("there is no member " + id)
+    public Person getById(long id) throws NoResultException {
+        Person result = personRepository.findById(id).orElseThrow(
+                () -> new NoResultException("There is no person " + id)
         );
         return result;
     }
 
     @Override
-    public List<PersonEntity> getByColor(ColorEntryEnum color) {
-        List<PersonEntity> result = personRepository.findByColor(color);
+    public List<Person> getByColor(ColorEntryEnum color) {
+        List<Person> result = personRepository.findByColor(color);
         return result;
     }
 
@@ -67,7 +59,7 @@ public class PersonServiceImpl implements PersonService {
     }
 
     @Override
-    public List<PersonEntity> get() {
+    public List<Person> get() {
         return personRepository.findAll();
     }
 }

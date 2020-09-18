@@ -1,14 +1,14 @@
 package de.assecor.services;
 
 import de.assecor.constant.ColorEntryEnum;
-import de.assecor.entity.PersonEntity;
+import de.assecor.entity.Person;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
 @Repository
-public interface PersonRepository extends JpaRepository<PersonEntity, Long> {
+public interface PersonRepository extends JpaRepository<Person, Long> {
 
-    List<PersonEntity> findByColor(ColorEntryEnum colorEntryEnum);
+    List<Person> findByColor(ColorEntryEnum colorEntryEnum);
 }

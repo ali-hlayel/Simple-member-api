@@ -2,20 +2,20 @@ package de.assecor.services;
 
 import de.assecor.config.exception.CreateErrorException;
 import de.assecor.constant.ColorEntryEnum;
-import de.assecor.entity.PersonEntity;
+import de.assecor.entity.Person;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
 public interface PersonService {
 
-    PersonEntity createPerson(PersonEntity person) throws CreateErrorException;
+    Person createPerson(Person person) throws CreateErrorException;
 
-    PersonEntity getById(long id);
+    Person getById(long id);
 
-    List<PersonEntity> getByColor(ColorEntryEnum color);
+    List<Person> getByColor(ColorEntryEnum color);
 
-    List<PersonEntity> get();
+    List<Person> get();
 
     void Upload(MultipartFile file);
 }

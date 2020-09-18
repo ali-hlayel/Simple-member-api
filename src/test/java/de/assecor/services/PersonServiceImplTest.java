@@ -1,7 +1,7 @@
 package de.assecor.services;
 
 import de.assecor.config.exception.CreateErrorException;
-import de.assecor.entity.PersonEntity;
+import de.assecor.entity.Person;
 import de.assecor.person.TestPersonFactory;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -30,9 +30,9 @@ class PersonServiceImplTest {
 
     @Test
     void testCreate() throws CreateErrorException {
-        PersonEntity person = TestPersonFactory.createPerson();
-        when(personRepository.save(any(PersonEntity.class))).thenReturn(person);
-        PersonEntity result = personService.createPerson(person);
+        Person person = TestPersonFactory.createPerson();
+        when(personRepository.save(any(Person.class))).thenReturn(person);
+        Person result = personService.createPerson(person);
         assertEquals("Ali", result.getName());
         assertEquals("Hlayel", result.getLastName());
         verify(personRepository).save(person);
@@ -40,10 +40,10 @@ class PersonServiceImplTest {
 
     @Test
     void testGetById() {
-        PersonEntity person = TestPersonFactory.createPerson();
+        Person person = TestPersonFactory.createPerson();
         person.setId(1L);
         when(personRepository.findById(any(Long.class))).thenReturn(Optional.of(person));
-        PersonEntity result = personService.getById(1L);
+        Person result = personService.getById(1L);
         assertEquals(person.getName(), result.getName());
         assertEquals(person.getColor(), result.getColor());
         verify(personRepository).findById(1L);
@@ -66,16 +66,16 @@ class PersonServiceImplTest {
 
     @Test
     void testGet() {
-        PersonEntity firstPerson = TestPersonFactory.createPerson();
+        Person firstPerson = TestPersonFactory.createPerson();
         firstPerson.setId(1L);
-        PersonEntity secondPerson = TestPersonFactory.createPerson();
+        Person secondPerson = TestPersonFactory.createPerson();
         secondPerson.setId(2L);
-        List<PersonEntity> personEntityList = new ArrayList<>();
-        personEntityList.add(firstPerson);
-        personEntityList.add(secondPerson);
-        when(personRepository.findAll()).thenReturn(personEntityList);
+        List<Person> personList = new ArrayList<>();
+        personList.add(firstPerson);
+        personList.add(secondPerson);
+        when(personRepository.findAll()).thenReturn(personList);
 
-        List<PersonEntity> results = personService.get();
+        List<Person> results = personService.get();
         assertEquals(2, results.size());
         assertEquals(firstPerson.getName(), results.get(0).getName());
         assertEquals(secondPerson.getLastName(), results.get(1).getLastName());
