@@ -1,5 +1,6 @@
 package de.assecor.controller;
 
+import de.assecor.constant.ColorEntryEnum;
 import de.assecor.entity.Person;
 import de.assecor.person.PersonCreateModel;
 import de.assecor.person.TestPersonFactory;
@@ -53,21 +54,26 @@ class PersonControllerTest {
                 .build();
         this.mappingJackson2HttpMessageConverter = new MappingJackson2HttpMessageConverter();
     }
-    @Test
-    void importCsvFile() {
-    }
 
     @Test
-    void getPersons() throws Exception {
+    void testGetPersons() throws Exception {
         Person firstPerson = TestPersonFactory.createPerson();
         Person secondPerson = TestPersonFactory.createPerson();
         List<Person> addresses = Arrays.asList(firstPerson, secondPerson);
-        when(personService.get()).thenReturn(addresses);
+        when(personService.getPersons(0, 2)).thenReturn(addresses);
         this.mockMvc.perform(get(LINK))
                 .andExpect(status().isOk());
     }
+
     @Test
-    void getPerson() throws Exception {
+    void testGetPersonsWithIdNoResults() throws Exception {
+        when(personService.getPersons(0, 2)).thenThrow(NoResultException.class);
+        this.mockMvc.perform(get(LINK))
+                .andExpect(status().isNoContent());
+    }
+
+    @Test
+    void testGetPerson() throws Exception {
         Person person = TestPersonFactory.createPerson();
         person.setId(1L);
         when(personService.getById(any(Long.class))).thenReturn(person);
@@ -77,12 +83,14 @@ class PersonControllerTest {
     }
 
     @Test
-    void getPersonWithIdThatIsNotFound() throws Exception {
+    void testGetPersonWithIdThatIsNotFound() throws Exception {
         when(personService.getById(10L)).thenThrow(NoResultException.class);
+        this.mockMvc.perform(get(LINK + "/10"))
+                .andExpect(status().isNoContent());
     }
 
     @Test
-    void createPerson() throws Exception {
+    void testCreatePerson() throws Exception {
         PersonCreateModel personRequestCreateModel = TestPersonFactory.createPersonModel();
         when(personService.createPerson(any(Person.class))).thenReturn(TestPersonFactory.createPerson());
 
@@ -92,8 +100,22 @@ class PersonControllerTest {
                 .andExpect(status().isCreated())
                 .andExpect(jsonPath("$.name").value("Ali"));
     }
+
     @Test
-    void testGetPersonByColor() {
+    void testGetPersonByColor() throws Exception {
+        Person firstPerson = TestPersonFactory.createPerson();
+        Person secondPerson = TestPersonFactory.createPerson();
+        List<Person> personsList = Arrays.asList(firstPerson, secondPerson);
+        when(personService.getByColor(any(ColorEntryEnum.class))).thenReturn(personsList);
+        this.mockMvc.perform(get(LINK + "/color/rot"))
+                .andExpect(status().isOk());
+    }
+
+    @Test
+    void testGetPersonsByColorsWithIdNoResults() throws Exception {
+        when(personService.getByColor(any(ColorEntryEnum.class))).thenThrow(NoResultException.class);
+        this.mockMvc.perform(get(LINK + "/color/rot"))
+                .andExpect(status().isNoContent());
     }
 
     private String json(Object o) throws IOException {

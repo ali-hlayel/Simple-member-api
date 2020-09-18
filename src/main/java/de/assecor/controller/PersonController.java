@@ -1,7 +1,6 @@
 package de.assecor.controller;
 
 import de.assecor.config.exception.CreateErrorException;
-import de.assecor.config.exception.NotFoundException;
 import de.assecor.config.exception.ServiceResponseException;
 import de.assecor.config.helper.CsvReader;
 import de.assecor.constant.ColorEntryEnum;
@@ -16,6 +15,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -27,7 +28,7 @@ import java.util.List;
 
 
 @RestController
-@RequestMapping(value = "/persons", produces = "application/json")
+@RequestMapping(value = "/persons", produces = MediaType.APPLICATION_JSON_VALUE)
 public class PersonController {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(PersonController.class);
@@ -46,8 +47,6 @@ public class PersonController {
 
         if (CsvReader.hasCSVFormat(file)) {
             try {
-                System.out.println("----------------");
-
                 personService.Upload(file);
 
             } catch (Exception e) {
@@ -68,38 +67,51 @@ public class PersonController {
 
     @ApiOperation("Get all persons")
     @GetMapping()
-    public List<Person> getPersons() {
-
-        return personService.get();
+    public ResponseEntity<List<PersonModel>> getPersons(@RequestParam(value = "page", defaultValue = "0") int page,
+                                                        @RequestParam(value = "limit", defaultValue = "2") int limit) {
+        try {
+            List<PersonModel> results = new ArrayList<>();
+            List<Person> personsList = personService.getPersons(page, limit);
+            ModelMapper modelMapper = new ModelMapper();
+            for (Person person : personsList) {
+                results.add(modelMapper.map(person, PersonModel.class));
+            }
+            return new ResponseEntity<>(results, HttpStatus.OK);
+        } catch (NoResultException e) {
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        }
     }
 
     @ApiOperation("Get Person by id")
     @GetMapping(path = "/{id}")
-    public PersonModel gePerson(@Min(1) @PathVariable long id) throws ServiceResponseException {
+    public ResponseEntity<PersonModel> gePerson(@Min(1) @PathVariable long id) throws ServiceResponseException {
         Person result;
         PersonModel person;
         try {
             result = personService.getById(id);
+            ModelMapper modelMapper = new ModelMapper();
+            person = modelMapper.map(result, PersonModel.class);
+
+            return new ResponseEntity<>(person, HttpStatus.OK);
         } catch (NoResultException e) {
-            String message = "Could not find user with id " + id + ": " + e.getMessage();
-            LOGGER.error(message, e);
-            throw new NotFoundException(message, e);
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         }
 
-        ModelMapper modelMapper = new ModelMapper();
-        person = modelMapper.map(result, PersonModel.class);
-
-        return person;
     }
 
     @ApiOperation("Get by colors")
     @GetMapping(path = "/color/{color}")
-    public List<PersonModel> getPersonByColor(@PathVariable String color) {
-        List<PersonModel> results = new ArrayList<>();
-        List<Person> personsList = personService.getByColor(ColorEntryEnum.valueOf(color));
-        ModelMapper modelMapper = new ModelMapper();
-        for (Person person : personsList) {
-            results.add(modelMapper.map(person, PersonModel.class));
-        }        return results;
+    public ResponseEntity<List<PersonModel>> getPersonByColor(@PathVariable String color) {
+        try {
+            List<PersonModel> results = new ArrayList<>();
+            List<Person> personsList = personService.getByColor(ColorEntryEnum.valueOf(color));
+            ModelMapper modelMapper = new ModelMapper();
+            for (Person person : personsList) {
+                results.add(modelMapper.map(person, PersonModel.class));
+            }
+            return new ResponseEntity<>(results, HttpStatus.OK);
+        } catch (NoResultException e) {
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        }
     }
 }

@@ -1,6 +1,5 @@
 package de.assecor.config.helper;
 
-
 import com.opencsv.CSVReader;
 import com.opencsv.exceptions.CsvException;
 import de.assecor.person.PersonImportRowModel;
@@ -23,31 +22,22 @@ public class CsvReader {
         return true;
     }
 
-    public static List<PersonImportRowModel> csvToTutorials(Reader is) throws IOException, CsvException {
+    public static List<PersonImportRowModel> csvToEntity(Reader is) throws IOException, CsvException {
         CSVReader reader = new CSVReader(new FileReader(String.valueOf(new BufferedReader(is))));
 
-             List<PersonImportRowModel> personImportRowModels = new ArrayList<PersonImportRowModel>();
+        List<PersonImportRowModel> personImportRowModels = new ArrayList<PersonImportRowModel>();
 
-             List<String[]> records = reader.readAll();
+        List<String[]> records = reader.readAll();
+        System.out.println(records);
+        Iterator<String[]> iterator = records.iterator();
+        while (iterator.hasNext()) {
 
-             Iterator<String[]> iterator = records.iterator();
-        System.out.println(iterator + "----------------");
-
-		while (iterator.hasNext()) {
-            String[] record = iterator.next();
-            PersonImportRowModel personImportRowModel = new PersonImportRowModel();
-            personImportRowModel.setName(record[0]);
-            personImportRowModel.setLastName(record[1]);
-            personImportRowModel.setAddress(record[2]);
-            personImportRowModel.setColor(record[3]);
-            personImportRowModels.add(personImportRowModel);
-            System.out.println(personImportRowModel.getAddress() + "----------------");
 
         }
 
 
         reader.close();
-return personImportRowModels;
+        return personImportRowModels;
     }
 
 }

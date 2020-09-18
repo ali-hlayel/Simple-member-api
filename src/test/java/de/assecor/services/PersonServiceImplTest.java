@@ -75,7 +75,7 @@ class PersonServiceImplTest {
         personList.add(secondPerson);
         when(personRepository.findAll()).thenReturn(personList);
 
-        List<Person> results = personService.get();
+        List<Person> results = personService.getPersons(0,2);
         assertEquals(2, results.size());
         assertEquals(firstPerson.getName(), results.get(0).getName());
         assertEquals(secondPerson.getLastName(), results.get(1).getLastName());

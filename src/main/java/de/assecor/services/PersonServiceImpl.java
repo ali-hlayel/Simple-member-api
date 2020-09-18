@@ -7,6 +7,9 @@ import de.assecor.constant.ColorEntryEnum;
 import de.assecor.entity.Person;
 import de.assecor.person.PersonImportRowModel;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -14,7 +17,6 @@ import javax.persistence.NoResultException;
 import java.io.IOException;
 import java.io.Reader;
 import java.util.List;
-import java.util.Optional;
 
 @Service("personService")
 public class PersonServiceImpl implements PersonService {
@@ -46,7 +48,7 @@ public class PersonServiceImpl implements PersonService {
     @Override
     public void Upload(MultipartFile file) {
         try {
-            List<PersonImportRowModel> personEntities = CsvReader.csvToTutorials((Reader) file);
+            List<PersonImportRowModel> personEntities = CsvReader.csvToEntity((Reader) file);
             //personRepository.saveAll(personEntities);
         } catch (IOException | CsvException e) {
             throw new RuntimeException("fail to store csv data: " + e.getMessage());
@@ -54,7 +56,12 @@ public class PersonServiceImpl implements PersonService {
     }
 
     @Override
-    public List<Person> get() {
-        return personRepository.findAll();
+    public List<Person> getPersons(int page, int limit) {
+        if(page>0) page = page-1;
+        Pageable pageableRequest = PageRequest.of(page, limit);
+        Page<Person> personsPage = personRepository.findAll(pageableRequest);
+        List<Person> personsList = personsPage.getContent();
+        return personsList;
     }
+
 }
