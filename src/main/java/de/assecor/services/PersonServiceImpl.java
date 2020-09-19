@@ -1,11 +1,12 @@
 package de.assecor.services;
 
-import com.opencsv.exceptions.CsvException;
 import de.assecor.config.exception.CreateErrorException;
 import de.assecor.config.helper.CsvReader;
 import de.assecor.constant.ColorEntryEnum;
 import de.assecor.entity.Person;
 import de.assecor.person.PersonImportRowModel;
+import de.assecor.person.PersonModel;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -16,6 +17,7 @@ import org.springframework.web.multipart.MultipartFile;
 import javax.persistence.NoResultException;
 import java.io.IOException;
 import java.io.Reader;
+import java.util.ArrayList;
 import java.util.List;
 
 @Service("personService")
@@ -48,9 +50,15 @@ public class PersonServiceImpl implements PersonService {
     @Override
     public void Upload(MultipartFile file) {
         try {
-            List<PersonImportRowModel> personEntities = CsvReader.csvToEntity((Reader) file);
-            //personRepository.saveAll(personEntities);
-        } catch (IOException | CsvException e) {
+            List<PersonImportRowModel> personEntities = CsvReader.csvToEntity(file.getInputStream());
+            List<Person> results = new ArrayList<>();
+            ModelMapper modelMapper = new ModelMapper();
+            for (PersonImportRowModel importedPerson : personEntities) {
+                results.add(modelMapper.map(importedPerson, Person.class));
+            }
+            System.out.println(results);
+            personRepository.saveAll(results);
+        } catch (IOException e) {
             throw new RuntimeException("fail to store csv data: " + e.getMessage());
         }
     }

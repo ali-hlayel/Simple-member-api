@@ -6,9 +6,11 @@ public class PersonImportRowModel {
 
     private String lastName;
 
-    private String address;
+    private Long postZeil;
 
-    private String color;
+    private String city;
+
+    private int color;
 
     public String getName() {
         return name;
@@ -26,19 +28,38 @@ public class PersonImportRowModel {
         this.lastName = lastName;
     }
 
-    public String getAddress() {
-        return address;
+    public Long getPostZeil() {
+        return postZeil;
     }
 
-    public void setAddress(String address) {
-        this.address = address;
+    public void setPostZeil(Long postZeil) {
+        this.postZeil = postZeil;
     }
 
-    public String getColor() {
+    public String getCity() {
+        return city;
+    }
+
+    public void setCity(String city) {
+        this.city = city;
+    }
+
+    public int getColor() {
         return color;
     }
 
-    public void setColor(String color) {
+    public void setColor(int color) {
         this.color = color;
+    }
+
+    @Override
+    public String toString() {
+        return "PersonImportRowModel{" +
+                "name='" + name + '\'' +
+                ", lastName='" + lastName + '\'' +
+                ", postZeil='" + postZeil + '\'' +
+                ", address='" + city + '\'' +
+                ", color='" + color + '\'' +
+                '}';
     }
 }

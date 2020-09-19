@@ -11,7 +11,7 @@ public class TestPersonFactory {
         person.setLastName("Hlayel");
         person.setCity("Jerusalem");
         person.setZipCode(1234L);
-        person.setColor(ColorEntryEnum.blau.blau);
+        person.setColor(ColorEntryEnum.blau);
         return person;
     }
 
@@ -21,7 +21,7 @@ public class TestPersonFactory {
         person.setLastName("Hlayel");
         person.setCity("Jerusalem");
         person.setZipCode(1234L);
-        person.setColor(ColorEntryEnum.blau.blau);
+        person.setColor(ColorEntryEnum.blau);
         return person;
     }
 }
