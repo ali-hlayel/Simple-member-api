@@ -12,6 +12,8 @@ Forth one is to create a new person.
 and last one is to import list of people details from a csv file.
 
 # Test
-the code is already tested using Junit test also for runtime test, i implementd swagger Api.
+The code is already tested using Junit test. I also used swagger API for testing the project at the run time process. 
 
+#Required endpoints
+as shown in the attached figure, i built 5  controllers endpoints. 
 

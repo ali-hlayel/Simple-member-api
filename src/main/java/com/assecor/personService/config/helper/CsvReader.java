@@ -53,7 +53,6 @@ public class CsvReader {
                 personImportRowModel.setZipCode(cityCode);
                 personImportRowModel.setCity(city);
                 personImportRowModel.setColor(ColorEntryEnum.getByNumber(Integer.valueOf(iterator.next().toString().trim())));
-                System.out.println(personImportRowModel);
                 personImportRowModels.add(personImportRowModel);
             }
 
