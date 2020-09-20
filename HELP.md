@@ -1,22 +1,17 @@
-# Read Me First
-The following was discovered as part of building this project:
+#ASSECOR GmbH Challenge 
 
-* The original package name 'de.assecor.person-service' is invalid and this project uses 'de.assecor.person' instead.
+This is the challenge project of Ali Hlayel, created by the requirements defined in challenge.md. It contains 1 microservice which is implemnted by me.
+I used IntelliJ IDE for development. Infrastructure is created over Spring Boot, Hibernate, MySql database(dev purpose) and  RESTFul services.
 
-# Getting Started
+#Person-Service
+Person microservice is built as RESTFul API. it contains methods about person details: 
+One is for retrieving all persons.
+Second find person by giving Id.
+Third one git a list of persons details with given color.
+Forth one is to create a new person.
+and last one is to import list of people details from a csv file.
 
-### Reference Documentation
-For further reference, please consider the following sections:
+# Test
+the code is already tested using Junit test also for runtime test, i implementd swagger Api.
 
-* [Official Apache Maven documentation](https://maven.apache.org/guides/index.html)
-* [Spring Boot Maven Plugin Reference Guide](https://docs.spring.io/spring-boot/docs/2.3.3.RELEASE/maven-plugin/reference/html/)
-* [Create an OCI image](https://docs.spring.io/spring-boot/docs/2.3.3.RELEASE/maven-plugin/reference/html/#build-image)
-* [Spring Web](https://docs.spring.io/spring-boot/docs/2.3.3.RELEASE/reference/htmlsingle/#boot-features-developing-web-applications)
-
-### Guides
-The following guides illustrate how to use some features concretely:
-
-* [Building a RESTful Web Service](https://spring.io/guides/gs/rest-service/)
-* [Serving Web Content with Spring MVC](https://spring.io/guides/gs/serving-web-content/)
-* [Building REST services with Spring](https://spring.io/guides/tutorials/bookmarks/)
 
