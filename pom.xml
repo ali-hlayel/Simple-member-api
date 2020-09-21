@@ -17,7 +17,7 @@
 	<properties>
 		<java.version>11</java.version>
 		<swagger2.version>2.9.2</swagger2.version>
-		<postgres.version>9.4.1212</postgres.version>
+		<modelMappper.version>2.0.0</modelMappper.version>
 	</properties>
 
 	<dependencies>
@@ -26,7 +26,6 @@
 			<groupId>io.springfox</groupId>
 			<artifactId>springfox-swagger2</artifactId>
 			<version>${swagger2.version}</version>
-
 		</dependency>
 		<dependency>
 			<groupId>io.springfox</groupId>
@@ -38,17 +37,9 @@
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-web</artifactId>
 		</dependency>
-
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-thymeleaf</artifactId>
-		</dependency>
-
-		<dependency>
-			<groupId>javax.xml.bind</groupId>
-			<artifactId>jaxb-api</artifactId>
-			<version>2.3.0</version>
-			<scope>runtime</scope>
 		</dependency>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
@@ -67,12 +58,6 @@
 			<groupId>com.h2database</groupId>
 			<artifactId>h2</artifactId>
 			<scope>runtime</scope>
-		</dependency>
-
-		<dependency>
-			<groupId>org.postgresql</groupId>
-			<artifactId>postgresql</artifactId>
-			<version>${postgres.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
@@ -101,7 +86,7 @@
 		<dependency>
 			<groupId>org.modelmapper</groupId>
 			<artifactId>modelmapper</artifactId>
-			<version>2.0.0</version>
+			<version>${modelMappper.version}</version>
 		</dependency>
 
     </dependencies>
