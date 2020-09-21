@@ -79,7 +79,7 @@ public class PersonController {
                     } catch (EntityAlreadyExistsException e) {
                         String message = "Could not create person: " + e.getMessage();
                         LOGGER.error(message, e);
-                        throw new ConflictException(message, e);
+                        continue;
                     }
                 }
             } catch (IOException e) {
