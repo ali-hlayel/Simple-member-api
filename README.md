@@ -24,3 +24,9 @@ http://localhost:8080/swagger-ui.html#
 
 
 <img width="1427" alt="Screenshot 2020-09-20 at 20 48 58" src="https://user-images.githubusercontent.com/68303228/93754996-d4e2f800-fc02-11ea-83ea-746ddd5bcd84.png">
+
+<img width="1427" alt="Screenshot 2020-09-20 at 20 51 21" src="https://user-images.githubusercontent.com/68303228/93755627-ebd61a00-fc03-11ea-8d71-7832bc189a33.png">
+
+
+<img width="1427" alt="Screenshot 2020-09-20 at 20 50 49" src="https://user-images.githubusercontent.com/68303228/93755443-9863cc00-fc03-11ea-9be6-6c1cb8f3e79b.png">
+
