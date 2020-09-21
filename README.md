@@ -13,7 +13,11 @@ and last one is to import list of people details from a csv file.
 
 # Test
 The code is already tested using Junit test. I also used swagger API for testing the project at the run time process. 
+you can test the 
 
 #Required endpoints
 as shown in the attached figure, i built 5  controllers endpoints. 
+you can use swagger to test the microservice controller by entering this link:
+http://localhost:8080/swagger-ui.html#
+
 
