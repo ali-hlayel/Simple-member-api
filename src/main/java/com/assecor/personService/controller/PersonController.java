@@ -77,7 +77,7 @@ public class PersonController {
                     try {
                         personService.createPerson(person);
                     } catch (EntityAlreadyExistsException e) {
-                        String message = "Could not create person: " + e.getMessage();
+                        String message = "Could not create person: " + e.getMessage() + " because it is already exists in the database";
                         LOGGER.error(message, e);
                         continue;
                     }
