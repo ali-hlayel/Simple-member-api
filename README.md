@@ -1,9 +1,9 @@
-#ASSECOR GmbH Challenge 
+# ASSECOR GmbH Challenge 
 
 This is the challenge project of Ali Hlayel, created by the requirements defined in challenge.md. It contains 1 microservice which is implemnted by me.
 I used IntelliJ IDE for development. Infrastructure is created over Spring Boot, Hibernate, h2 database(dev purpose) and  RESTFul services.
 
-#Person-Service
+# Person-Service
 Person microservice is built as RESTFul API. it contains methods about person details: 
 One is for retrieving all persons.
 Second find person by giving Id.
@@ -23,7 +23,7 @@ The code is already tested using Junit test. I also used swagger API for testing
 you can test the service using swagger by entering the following link: 
 http://localhost:8080/swagger-ui.html#
 
-#Required endpoints
+# Required endpoints
 as shown in the attached figure, i built 5  controllers endpoints. 
 The following pictures shows the test results for the service
 
