@@ -1,4 +1,4 @@
 -------------------------------------------------------------------------------
-Test set: com.assecor.personservice.PersonServiceApplicationTests
+Test set: com.assecor.personService.PersonServiceApplicationTests
 -------------------------------------------------------------------------------
-Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 2.27 s - in com.assecor.personservice.PersonServiceApplicationTests
+Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 1.987 s - in com.assecor.personService.PersonServiceApplicationTests

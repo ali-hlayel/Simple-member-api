@@ -12,18 +12,18 @@ Forth one is to create a new person.
 and last one is to import list of people details from a csv file.
 
 # Getting started
-The person-service is built using docker. The root container contains the Dockerfile which java 11 container and run copy the 
-person-service jar files inside. Also the  docker-compose.yml describes the configuration of service components (Postgress).
- the compponents will be run in a local environment.
+The person-service is built using docker. The root container contains the Dockerfile which java 11 container and copy the 
+person-service jar files inside. Also the  docker-compose.yml describes the configuration of service components (Postgress). the compponents will be run in a local environment.
+To run the service execute the ./build-all.sh shell script in the root directory of project in the terminal.
 
 # Test
 The code is already tested using Junit test. I also used swagger API for testing the project at the run time process. 
-you can test the 
-
-#Required endpointsa
-as shown in the attached figure, i built 5  controllers endpoints. 
-you can use swagger to test the microservice controller by entering this link:
+you can test the service using swagger by entering the following link: 
 http://localhost:8080/swagger-ui.html#
+
+#Required endpoints
+as shown in the attached figure, i built 5  controllers endpoints. 
+The following pictures shows the test resluts for the service
 
 <img width="1427" alt="Screenshot 2020-09-20 at 20 49 41" src="https://user-images.githubusercontent.com/68303228/93755349-67839700-fc03-11ea-860a-128a65550fed.png">
 

@@ -1,4 +1,4 @@
-com/assecor/personservice/PersonServiceApplicationTests.class
-com/assecor/personservice/services/PersonServiceImplTest.class
-com/assecor/personservice/controller/PersonControllerTest.class
-com/assecor/personservice/model/TestPersonFactory.class
+com/assecor/personService/PersonServiceApplicationTests.class
+com/assecor/personService/model/TestPersonFactory.class
+com/assecor/personService/services/PersonServiceImplTest.class
+com/assecor/personService/controller/PersonControllerTest.class
