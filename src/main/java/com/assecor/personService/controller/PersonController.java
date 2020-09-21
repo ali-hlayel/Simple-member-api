@@ -1,10 +1,10 @@
 package com.assecor.personService.controller;
 
-import com.assecor.personService.config.exception.ConflictException;
-import com.assecor.personService.config.exception.EntityAlreadyExistsException;
-import com.assecor.personService.config.exception.NotFoundException;
-import com.assecor.personService.config.exception.ServiceResponseException;
-import com.assecor.personService.config.helper.CsvReader;
+import com.assecor.personService.utils.exception.ConflictException;
+import com.assecor.personService.utils.exception.EntityAlreadyExistsException;
+import com.assecor.personService.utils.exception.NotFoundException;
+import com.assecor.personService.utils.exception.ServiceResponseException;
+import com.assecor.personService.utils.helper.CsvReader;
 import com.assecor.personService.constant.ColorEntryEnum;
 import com.assecor.personService.entity.Person;
 import com.assecor.personService.model.PersonCreateModel;

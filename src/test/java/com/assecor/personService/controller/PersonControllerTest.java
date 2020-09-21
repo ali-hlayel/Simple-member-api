@@ -1,10 +1,8 @@
 package com.assecor.personService.controller;
 
-import com.assecor.personService.config.exception.ServiceResponseException;
 import com.assecor.personService.constant.ColorEntryEnum;
 import com.assecor.personService.entity.Person;
 import com.assecor.personService.model.PersonCreateModel;
-import com.assecor.personService.model.PersonImportRowModel;
 import com.assecor.personService.model.TestPersonFactory;
 import com.assecor.personService.services.PersonService;
 import org.junit.jupiter.api.BeforeEach;

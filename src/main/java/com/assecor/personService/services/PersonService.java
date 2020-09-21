@@ -1,6 +1,6 @@
 package com.assecor.personService.services;
 
-import com.assecor.personService.config.exception.EntityAlreadyExistsException;
+import com.assecor.personService.utils.exception.EntityAlreadyExistsException;
 import com.assecor.personService.constant.ColorEntryEnum;
 import com.assecor.personService.entity.Person;
 
