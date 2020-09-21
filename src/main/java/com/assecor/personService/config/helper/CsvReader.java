@@ -45,7 +45,7 @@ public class CsvReader {
             Iterator iterator = lineValues.iterator();
             while (iterator.hasNext()) {
                 PersonImportRowModel personImportRowModel = new PersonImportRowModel();
-                personImportRowModel.setName(iterator.next().toString().trim());
+                personImportRowModel.setFirstName(iterator.next().toString().trim());
                 personImportRowModel.setLastName(iterator.next().toString().trim());
                 String[] address = iterator.next().toString().trim().split(" ", 2);
                 Long cityCode = Long.parseLong(address[0]);

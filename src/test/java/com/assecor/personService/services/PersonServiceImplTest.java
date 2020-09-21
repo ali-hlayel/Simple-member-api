@@ -38,7 +38,7 @@ class PersonServiceImplTest {
         Person person = TestPersonFactory.createPerson();
         when(personRepository.save(any(Person.class))).thenReturn(person);
         Person result = personService.createPerson(person);
-        assertEquals("Ali", result.getName());
+        assertEquals("Ali", result.getFirstName());
         assertEquals("Hlayel", result.getLastName());
         verify(personRepository).save(person);
     }
@@ -47,7 +47,7 @@ class PersonServiceImplTest {
     void testCreateThrowPersonAlreadyExists() {
         Person person = TestPersonFactory.createPerson();
         person.setId(1L);
-        when(personRepository.existsByNameAndLastName(any(String.class), any(String.class))).thenReturn(true);
+        when(personRepository.existsByFirstNameAndLastName(any(String.class), any(String.class))).thenReturn(true);
         assertThrows(EntityAlreadyExistsException.class, () -> personService.createPerson(person));    }
 
     @Test
@@ -56,7 +56,7 @@ class PersonServiceImplTest {
         person.setId(1L);
         when(personRepository.findById(any(Long.class))).thenReturn(Optional.of(person));
         Person result = personService.getById(1L);
-        assertEquals(person.getName(), result.getName());
+        assertEquals(person.getFirstName(), result.getFirstName());
         Assertions.assertEquals(person.getColor(), result.getColor());
         verify(personRepository).findById(1L);
     }
@@ -94,7 +94,7 @@ class PersonServiceImplTest {
         when(personRepository.findAll(pageRequest)).thenReturn(personPage);
         List<Person> results = personService.getPersons(0, 2);
         assertEquals(2, results.size());
-        assertEquals(firstPerson.getName(), results.get(0).getName());
+        assertEquals(firstPerson.getFirstName(), results.get(0).getFirstName());
         assertEquals(secondPerson.getLastName(), results.get(1).getLastName());
         verify(personRepository).findAll(pageRequest);
     }

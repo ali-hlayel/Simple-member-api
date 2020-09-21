@@ -13,5 +13,5 @@ public interface PersonRepository extends JpaRepository<Person, Long>, JpaSpecif
 
     List<Person> findByColor(ColorEntryEnum colorEntryEnum);
 
-    boolean existsByNameAndLastName(String name, String lastName);
+    boolean existsByFirstNameAndLastName(String name, String lastName);
 }

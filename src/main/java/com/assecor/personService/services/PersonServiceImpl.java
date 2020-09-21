@@ -21,10 +21,10 @@ public class PersonServiceImpl implements PersonService {
     @Override
     public Person createPerson(Person person) throws EntityAlreadyExistsException {
         Person result;
-        if (!personRepository.existsByNameAndLastName(person.getName(), person.getLastName())) {
+        if (!personRepository.existsByFirstNameAndLastName(person.getFirstName(), person.getLastName())) {
             result = personRepository.save(person);
         } else
-            throw new EntityAlreadyExistsException("Person with name  " + person.getName() + " " + person.getLastName() + " is already exists.");
+            throw new EntityAlreadyExistsException("Person with name  " + person.getFirstName() + " " + person.getLastName() + " is already exists.");
         return result;
     }
 

@@ -19,7 +19,7 @@ public class Person {
     private Long id;
 
     @NotBlank
-    private String name;
+    private String firstName;
 
     @NotBlank
     private String lastName;
@@ -41,12 +41,12 @@ public class Person {
         this.id = id;
     }
 
-    public String getName() {
-        return name;
+    public String getFirstName() {
+        return firstName;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
     }
 
     public String getLastName() {
@@ -85,7 +85,7 @@ public class Person {
     public String toString() {
         return "Person{" +
                 "id=" + id +
-                ", name='" + name + '\'' +
+                ", name='" + firstName + '\'' +
                 ", lastName='" + lastName + '\'' +
                 ", zipCode=" + zipCode +
                 ", city='" + city + '\'' +
