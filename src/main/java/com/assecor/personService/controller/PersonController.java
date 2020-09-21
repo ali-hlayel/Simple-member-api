@@ -65,7 +65,7 @@ public class PersonController {
     @ApiOperation("upload a list of persons from a csv file")
     @PostMapping("/import")
     public List<Person> importCsvFile(
-            @RequestParam("file") MultipartFile file) throws ServiceResponseException {
+            @RequestParam("file") MultipartFile file) {
         List<Person> personList = new ArrayList<>();
         if (CsvReader.hasCSVFormat(file)) {
             try {
