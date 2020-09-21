@@ -22,10 +22,13 @@ To run the service execute execute ./build-all.sh shell script in the root direc
 The code is already tested using Junit test. I also used swagger API for testing the project at the run time process. 
 you can test the service using swagger by entering the following link: 
 http://localhost:8080/swagger-ui.html#
+As shown in the attached figure, i built 5 controllers endpoints. 
+The import end point reads the sample-input.csv file and save the persons data in the database.
+The rest of the endpoints are (create, getById, getByColor, and getAll persons) 
+# Endpoints
 
-# Required endpoints
-as shown in the attached figure, i built 5  controllers endpoints. 
-The following pictures shows the test results for the service
+The following pictures shows the test results for the service using swagger.
+
 
 <img width="1427" alt="Screenshot 2020-09-20 at 20 49 41" src="https://user-images.githubusercontent.com/68303228/93755349-67839700-fc03-11ea-860a-128a65550fed.png">
 
