@@ -24,22 +24,24 @@ public class PersonServiceImpl implements PersonService {
         if (!personRepository.existsByFirstNameAndLastName(person.getFirstName(), person.getLastName())) {
             result = personRepository.save(person);
         } else
-            throw new EntityAlreadyExistsException("Person with name  " + person.getFirstName() + " " + person.getLastName() + " is already exists.");
+            throw new EntityAlreadyExistsException("Person with full name  " + person.getFirstName() + " " + person.getLastName() + " is already exists.");
         return result;
     }
 
     @Override
     public Person getById(long id) throws NoResultException {
         Person result = personRepository.findById(id).orElseThrow(
-                () -> new NoResultException("There is no person " + id)
-        );
+                () -> new NoResultException("There is no person " + id));
         return result;
     }
 
     @Override
-    public List<Person> getByColor(ColorEntryEnum color) {
-        List<Person> result = personRepository.findByColor(color);
-        return result;
+    public List<Person> getByColor(ColorEntryEnum color) throws NoResultException {
+        if (!personRepository.findByColor(color).isEmpty()) {
+            List<Person> result = personRepository.findByColor(color);
+            return result;
+        } else
+            throw new NoResultException("There is no person with color " + color);
     }
 
     @Override

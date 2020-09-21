@@ -12,7 +12,8 @@ com/assecor/personService/model/PersonCreateModel.class
 com/assecor/personService/services/PersonService.class
 com/assecor/personService/services/PersonRepository.class
 com/assecor/personService/config/exception/ServiceResponseException.class
-com/assecor/personService/config/exception/CreateErrorException.class
 com/assecor/personService/constant/ColorEntryEnum.class
 com/assecor/personService/PersonServiceApplication.class
+com/assecor/personService/config/exception/ConflictException.class
+com/assecor/personService/config/exception/NotFoundException.class
 com/assecor/personService/model/PersonImportRowModel.class

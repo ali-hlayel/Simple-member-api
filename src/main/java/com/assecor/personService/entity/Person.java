@@ -25,7 +25,7 @@ public class Person {
     private String lastName;
 
     @NotNull
-    private Long zipCode;
+    private Long postCode;
 
     @NotBlank
     private String city;
@@ -57,12 +57,12 @@ public class Person {
         this.lastName = lastName;
     }
 
-    public Long getZipCode() {
-        return zipCode;
+    public Long getPostCode() {
+        return postCode;
     }
 
-    public void setZipCode(Long zipCode) {
-        this.zipCode = zipCode;
+    public void setPostCode(Long postCode) {
+        this.postCode = postCode;
     }
 
     public String getCity() {
@@ -87,7 +87,7 @@ public class Person {
                 "id=" + id +
                 ", name='" + firstName + '\'' +
                 ", lastName='" + lastName + '\'' +
-                ", zipCode=" + zipCode +
+                ", zipCode=" + postCode +
                 ", city='" + city + '\'' +
                 ", color=" + color +
                 '}';

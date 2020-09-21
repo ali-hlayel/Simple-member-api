@@ -10,7 +10,7 @@ public class TestPersonFactory {
         person.setFirstName("Ali");
         person.setLastName("Hlayel");
         person.setCity("Jerusalem");
-        person.setZipCode(1234L);
+        person.setPostCode(12345L);
         person.setColor(ColorEntryEnum.blau);
         return person;
     }
@@ -20,7 +20,7 @@ public class TestPersonFactory {
         person.setFirstName("Ali");
         person.setLastName("Hlayel");
         person.setCity("Jerusalem");
-        person.setZipCode(1234L);
+        person.setPostCode(12345L);
         person.setColor(ColorEntryEnum.blau);
         return person;
     }
@@ -31,7 +31,7 @@ public class TestPersonFactory {
         personImportRowModel.setLastName("Hlayel");
         personImportRowModel.setColor(ColorEntryEnum.blau);
         personImportRowModel.setCity("Jerusalem");
-        personImportRowModel.setZipCode(1234L);
+        personImportRowModel.setPostCode(12345L);
         return personImportRowModel;
     }
 }

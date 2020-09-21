@@ -70,7 +70,6 @@ class PersonServiceImplTest {
         when(personRepository.findByColor(any(ColorEntryEnum.class))).thenReturn(personList);
         List<Person> result = personService.getByColor(person.getColor());
         assertEquals(1, result.size());
-        verify(personRepository).findByColor(person.getColor());
     }
 
     @Test

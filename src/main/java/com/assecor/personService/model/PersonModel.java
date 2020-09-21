@@ -10,7 +10,7 @@ public class PersonModel {
 
     private String lastName;
 
-    private Long zipCode;
+    private Long postCode;
 
     private String city;
 
@@ -40,12 +40,12 @@ public class PersonModel {
         this.lastName = lastName;
     }
 
-    public Long getZipCode() {
-        return zipCode;
+    public Long getPostCode() {
+        return postCode;
     }
 
-    public void setZipCode(Long zipCode) {
-        this.zipCode = zipCode;
+    public void setPostCode(Long postCode) {
+        this.postCode = postCode;
     }
 
     public String getCity() {

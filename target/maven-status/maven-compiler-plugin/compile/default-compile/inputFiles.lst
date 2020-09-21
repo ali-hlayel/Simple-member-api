@@ -1,7 +1,8 @@
 /Users/alihlayel/MyWork/Test-ASSECOR/src/main/java/com/assecor/personService/services/PersonServiceImpl.java
 /Users/alihlayel/MyWork/Test-ASSECOR/src/main/java/com/assecor/personService/PersonServiceApplication.java
-/Users/alihlayel/MyWork/Test-ASSECOR/src/main/java/com/assecor/personService/config/exception/CreateErrorException.java
+/Users/alihlayel/MyWork/Test-ASSECOR/src/main/java/com/assecor/personService/config/exception/ConflictException.java
 /Users/alihlayel/MyWork/Test-ASSECOR/src/main/java/com/assecor/personService/model/PersonImportRowModel.java
+/Users/alihlayel/MyWork/Test-ASSECOR/src/main/java/com/assecor/personService/config/exception/NotFoundException.java
 /Users/alihlayel/MyWork/Test-ASSECOR/src/main/java/com/assecor/personService/controller/PersonController.java
 /Users/alihlayel/MyWork/Test-ASSECOR/src/main/java/com/assecor/personService/model/PersonModel.java
 /Users/alihlayel/MyWork/Test-ASSECOR/src/main/java/com/assecor/personService/config/core/SwaggerConfig.java

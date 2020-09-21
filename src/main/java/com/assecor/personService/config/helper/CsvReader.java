@@ -34,7 +34,6 @@ public class CsvReader {
 
             List<CSVRecord> csvRecords = csvParser.getRecords();
             List<String> lineValues = Lists.newArrayList();
-
             for (int i = 0; i < csvRecords.size(); i++) {
                 CSVRecord record = csvRecords.get(i);
                 for (Iterator<String> iterator = record.iterator(); iterator.hasNext(); ) {
@@ -50,7 +49,7 @@ public class CsvReader {
                 String[] address = iterator.next().toString().trim().split(" ", 2);
                 Long cityCode = Long.parseLong(address[0]);
                 String city = cityValidation(address[1]);
-                personImportRowModel.setZipCode(cityCode);
+                personImportRowModel.setPostCode(cityCode);
                 personImportRowModel.setCity(city);
                 personImportRowModel.setColor(ColorEntryEnum.getByNumber(Integer.valueOf(iterator.next().toString().trim())));
                 personImportRowModels.add(personImportRowModel);
