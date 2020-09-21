@@ -6,19 +6,16 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
-        <module name="assecor" />
-        <module name="person-service" />
+        <module name="Test-ASSECOR" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
-      <module name="assecor" target="11" />
-      <module name="person-service" target="11" />
+      <module name="Test-ASSECOR" target="11" />
     </bytecodeTargetLevel>
   </component>
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
-      <module name="assecor" options="" />
-      <module name="person-service" options="-parameters" />
+      <module name="Test-ASSECOR" options="-parameters" />
     </option>
   </component>
 </project>

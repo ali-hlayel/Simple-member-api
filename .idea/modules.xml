@@ -2,8 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/assecor.iml" filepath="$PROJECT_DIR$/assecor.iml" />
-      <module fileurl="file://$PROJECT_DIR$/person-service.iml" filepath="$PROJECT_DIR$/person-service.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/Test-ASSECOR.iml" filepath="$PROJECT_DIR$/.idea/Test-ASSECOR.iml" />
     </modules>
   </component>
 </project>
