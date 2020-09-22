@@ -29,6 +29,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+@ControllerAdvice
 @RestController
 @RequestMapping(value = "/person-service", produces = MediaType.APPLICATION_JSON_VALUE)
 public class PersonController {
@@ -48,16 +49,10 @@ public class PersonController {
     public List<PersonModel> getPersons(@RequestParam(value = "page", defaultValue = "0") int page,
                                         @RequestParam(value = "limit", defaultValue = "10") int limit) throws ServiceResponseException {
         List<PersonModel> results = new ArrayList<>();
-        try {
-            List<Person> personsList = personService.getPersons(page, limit);
-            ModelMapper modelMapper = new ModelMapper();
-            for (Person person : personsList) {
-                results.add(modelMapper.map(person, PersonModel.class));
-            }
-        } catch (NoResultException e) {
-            String message = "Could not create person: " + e.getMessage();
-            LOGGER.error(message, e);
-            throw new NotFoundException(message, e);
+        List<Person> personsList = personService.getPersons(page, limit);
+        ModelMapper modelMapper = new ModelMapper();
+        for (Person person : personsList) {
+            results.add(modelMapper.map(person, PersonModel.class));
         }
         return results;
     }
@@ -77,7 +72,8 @@ public class PersonController {
                     try {
                         personService.createPerson(person);
                     } catch (EntityAlreadyExistsException e) {
-                        String message = "Could not create person: " + e.getMessage() + " because it is already exists in the database";
+                        String message = "Could not create person: " + e.getMessage() +
+                                " because it is already exists in the database";
                         LOGGER.error(message, e);
                         continue;
                     }
@@ -110,20 +106,19 @@ public class PersonController {
 
     @ApiOperation("Get Person by id")
     @GetMapping(path = "/person/{id}")
-    @ResponseStatus(HttpStatus.OK)
     public PersonModel gePerson(@Min(1) @PathVariable long id) throws ServiceResponseException {
         Person result;
         PersonModel person;
+        ModelMapper modelMapper = new ModelMapper();
         try {
             result = personService.getById(id);
-            ModelMapper modelMapper = new ModelMapper();
             person = modelMapper.map(result, PersonModel.class);
+            return person;
         } catch (NoResultException e) {
             String message = "Could not find a person with id " + id + ": " + e.getMessage();
             LOGGER.error(message, e);
             throw new NotFoundException(message, e);
         }
-        return person;
     }
 
     @ApiOperation("Get by colors")

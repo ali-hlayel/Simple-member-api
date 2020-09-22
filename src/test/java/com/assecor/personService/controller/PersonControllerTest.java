@@ -6,6 +6,7 @@ import com.assecor.personService.model.PersonCreateModel;
 import com.assecor.personService.model.TestPersonFactory;
 import com.assecor.personService.services.PersonService;
 import com.assecor.personService.utils.exception.EntityAlreadyExistsException;
+import com.assecor.personService.utils.exception.GlobalExceptionHandler;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -29,7 +30,6 @@ import java.util.*;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @ExtendWith(SpringExtension.class)
@@ -50,13 +50,14 @@ class PersonControllerTest {
         MockitoAnnotations.initMocks(this);
         this.mockMvc = MockMvcBuilders
                 .standaloneSetup(new PersonController(personService))
+                .setControllerAdvice(new GlobalExceptionHandler())
                 .setCustomArgumentResolvers(new PageableHandlerMethodArgumentResolver())
                 .build();
         this.mappingJackson2HttpMessageConverter = new MappingJackson2HttpMessageConverter();
     }
 
     @Test
-    void testImportCsvFile() throws Exception {
+    void testImportCsvFileCheckFile() throws Exception {
         MockMultipartFile file = new MockMultipartFile("file", "firstName,lastName,address,color".getBytes());
         this.mockMvc.perform(multipart(LINK + "/import")
                 .file(file))
@@ -84,8 +85,8 @@ class PersonControllerTest {
 
     @Test
     void testGetPersonWithIdThatIsNotFound() throws Exception {
-        when(personService.getById(10L)).thenThrow(NoResultException.class);
-        this.mockMvc.perform(get(LINK + "/10"))
+        when(personService.getById(any(Long.class))).thenThrow(NoResultException.class);
+        this.mockMvc.perform(get(LINK + "/person/10"))
                 .andExpect(status().isNotFound());
     }
 
@@ -100,14 +101,13 @@ class PersonControllerTest {
     }
 
     @Test
-    void testCreatePersonThrowEntityAlreadyExistsException() throws Exception {
+    void testCreatePersonThrowsEntityAlreadyExists() throws Exception {
         PersonCreateModel personRequestCreateModel = TestPersonFactory.createPersonModel();
-        Person person = TestPersonFactory.createPerson();
-        when(personService.createPerson(person)).thenThrow(EntityAlreadyExistsException.class);
+        when(personService.createPerson(any(Person.class))).thenThrow(EntityAlreadyExistsException.class);
         this.mockMvc.perform(post(LINK + "/person")
                 .contentType(MediaType.APPLICATION_JSON_UTF8)
                 .content(json(personRequestCreateModel)))
-                .andExpect(status().isCreated());
+                .andExpect(status().isConflict());
     }
 
     @Test
@@ -118,6 +118,13 @@ class PersonControllerTest {
         when(personService.getByColor(any(ColorEntryEnum.class))).thenReturn(personsList);
         this.mockMvc.perform(get(LINK + "/person/color/rot"))
                 .andExpect(status().isOk());
+    }
+
+    @Test
+    void testGetPersonByColorThrowNoResultException() throws Exception {
+        when(personService.getByColor(any(ColorEntryEnum.class))).thenThrow(NoResultException.class);
+        this.mockMvc.perform(get(LINK + "/person/color/rot"))
+                .andExpect(status().isNotFound());
     }
 
     private String json(Object o) throws IOException {
