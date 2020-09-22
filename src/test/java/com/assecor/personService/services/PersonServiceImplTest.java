@@ -16,6 +16,7 @@ import org.springframework.data.domain.PageRequest;
 
 import javax.persistence.NoResultException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
@@ -48,7 +49,8 @@ class PersonServiceImplTest {
         Person person = TestPersonFactory.createPerson();
         person.setId(1L);
         when(personRepository.existsByFirstNameAndLastName(any(String.class), any(String.class))).thenReturn(true);
-        assertThrows(EntityAlreadyExistsException.class, () -> personService.createPerson(person));    }
+        assertThrows(EntityAlreadyExistsException.class, () -> personService.createPerson(person));
+    }
 
     @Test
     void testGetById() {
@@ -70,6 +72,12 @@ class PersonServiceImplTest {
         when(personRepository.findByColor(any(ColorEntryEnum.class))).thenReturn(personList);
         List<Person> result = personService.getByColor(person.getColor());
         assertEquals(1, result.size());
+    }
+
+    @Test
+    void testGetByColorThrowsNoResultsException() {
+        when(personRepository.findByColor(any(ColorEntryEnum.class))).thenReturn(Collections.emptyList());
+        assertThrows(NoResultException.class, () -> personService.getByColor(ColorEntryEnum.blau));
     }
 
     @Test

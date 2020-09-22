@@ -5,6 +5,7 @@ import com.assecor.personService.entity.Person;
 import com.assecor.personService.model.PersonCreateModel;
 import com.assecor.personService.model.TestPersonFactory;
 import com.assecor.personService.services.PersonService;
+import com.assecor.personService.utils.exception.EntityAlreadyExistsException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -84,13 +85,25 @@ class PersonControllerTest {
     @Test
     void testGetPersonWithIdThatIsNotFound() throws Exception {
         when(personService.getById(10L)).thenThrow(NoResultException.class);
-        this.mockMvc.perform(get(LINK + "/10")).andExpect(status().isNotFound());
+        this.mockMvc.perform(get(LINK + "/10"))
+                .andExpect(status().isNotFound());
     }
 
     @Test
     void testCreatePerson() throws Exception {
         PersonCreateModel personRequestCreateModel = TestPersonFactory.createPersonModel();
         when(personService.createPerson(any(Person.class))).thenReturn(TestPersonFactory.createPerson());
+        this.mockMvc.perform(post(LINK + "/person")
+                .contentType(MediaType.APPLICATION_JSON_UTF8)
+                .content(json(personRequestCreateModel)))
+                .andExpect(status().isCreated());
+    }
+
+    @Test
+    void testCreatePersonThrowEntityAlreadyExistsException() throws Exception {
+        PersonCreateModel personRequestCreateModel = TestPersonFactory.createPersonModel();
+        Person person = TestPersonFactory.createPerson();
+        when(personService.createPerson(person)).thenThrow(EntityAlreadyExistsException.class);
         this.mockMvc.perform(post(LINK + "/person")
                 .contentType(MediaType.APPLICATION_JSON_UTF8)
                 .content(json(personRequestCreateModel)))

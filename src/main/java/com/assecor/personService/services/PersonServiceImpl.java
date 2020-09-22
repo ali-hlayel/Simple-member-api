@@ -24,7 +24,9 @@ public class PersonServiceImpl implements PersonService {
         if (!personRepository.existsByFirstNameAndLastName(person.getFirstName(), person.getLastName())) {
             result = personRepository.save(person);
         } else
-            throw new EntityAlreadyExistsException("Person with full name  " + person.getFirstName() + " " + person.getLastName() + " is already exists.");
+            throw new
+                    EntityAlreadyExistsException("Person with full name  " +
+                    person.getFirstName() + " " + person.getLastName() + " is already exists.");
         return result;
     }
 

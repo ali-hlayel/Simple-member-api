@@ -106,7 +106,6 @@ public class PersonController {
             throw new ConflictException(message, e);
         }
         return result;
-
     }
 
     @ApiOperation("Get Person by id")
